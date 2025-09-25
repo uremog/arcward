@@ -7,6 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import Navigation from "./components/Navigation/Navigation";
+import { Container, Row, Col } from 'react-bootstrap';
+
 import type { Route } from "./+types/root";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
@@ -43,7 +46,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <div>
+      <Navigation />
+      <Container>
+        <Row>
+          <Col>
+            <Outlet />
+          </Col>
+        </Row>
+      </Container>
+    </div>
+    
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
