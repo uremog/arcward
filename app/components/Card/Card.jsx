@@ -18,43 +18,83 @@ const Card = (cardObject) => (
                 <WardMarker variant="corner" rotate={180} />
             </Col>
             <Col className="text-center">
-                <WardMarker  />
+                <WardMarker rotate={0} />
             </Col>
             <Col className="text-end">
                 <WardMarker variant="corner" rotate={-90} />
             </Col>
         </Row>
         <Row>
-            <Col className="ps-5">
-                <ArcMarker rotate={225} />
+            <Col>
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <ArcMarker rotate={225} />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
             <Col className="text-center">
                 <ArcMarker rotate={-90} />
             </Col>
-            <Col className="pe-5 text-end">
-                <ArcMarker rotate={-45} className="ms-5" />
+            <Col className="text-end">
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <ArcMarker rotate={-45} />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
         </Row>
         <Row>
-            <Col className="ps-5">
-                <ArcMarker rotate={180} />
+            <Col>
+                <Row>
+                    <Col>
+                        <WardMarker rotate={90} />
+                    </Col>
+                    <Col>
+                        <ArcMarker rotate={180} />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
             <Col className="text-center">
                 <CharacterMarker />
             </Col>
-            <Col className="pe-5 text-end">
-                <ArcMarker rotate={0} />
+            <Col className="text-end">
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <ArcMarker rotate={0} />
+                    </Col>
+                    <Col>
+                        <WardMarker rotate={90} />
+                    </Col>
+                </Row>
             </Col>
         </Row>
         <Row>
-            <Col className="ps-5">
-                <ArcMarker rotate={135} />
+            <Col>
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <ArcMarker rotate={135} />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
             <Col className="text-center">
                 <ArcMarker rotate={90} />
             </Col>
-            <Col className="pe-5 text-end">
-                <ArcMarker rotate={45} />
+            <Col className="text-end">
+                <Row>
+                    <Col></Col>
+                    <Col>
+                        <ArcMarker rotate={45} />
+                    </Col>
+                    <Col></Col>
+                </Row>
             </Col>
         </Row>
         <Row>

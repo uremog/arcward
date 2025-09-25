@@ -9,7 +9,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const cardStyle = {
-  width: "400px"
+  width: "450px"
 };
 
 export default function Build() {
