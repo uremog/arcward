@@ -12,6 +12,12 @@ const cardStyle = {
   width: "450px"
 };
 
+const cardObject = {
+  arcs:[true, true, true, true, true, true, true],
+  wards:[true, true, true, true, true, true, true],
+  character:[true]
+};
+
 export default function Build() {
   return (
     <div>
@@ -19,7 +25,7 @@ export default function Build() {
         Build
       </div>
       <div style={cardStyle}>
-        <Card />
+        <Card cardObject={cardObject} />
       </div>
     </div>
   );

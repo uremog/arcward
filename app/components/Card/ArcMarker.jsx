@@ -20,8 +20,11 @@ const ArcMarker = React.forwardRef(({
   title = 'Arc Marker',
   ariaLabel,
   style = {},
+  visible = true,
   ...props
 }, ref) => {
+  if (!visible) return null;
+  
   const baseDeg = DIRECTION_TO_DEG[direction] ?? 0;
   const totalDeg = baseDeg + Number(rotate || 0);
   const transform = `rotate(${totalDeg} 12 12)`;

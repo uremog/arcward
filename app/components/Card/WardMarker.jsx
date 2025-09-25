@@ -16,8 +16,11 @@ const WardMarker = React.forwardRef(({
   title = 'Ward Marker',
   ariaLabel,
   style = {},
+  visible = true,
   ...props
 }, ref) => {
+  if (!visible) return null;
+  
   // Use the viewBox center (12,12) for rotation so behavior is stable regardless
   // of the CSS-rendered `size` prop.
   const VIEWBOX_CENTER = 12;
