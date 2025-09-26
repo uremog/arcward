@@ -11,7 +11,7 @@ import CharacterMarker from "./CharacterMarker.jsx";
         wards: [0-7] (arranged clockwise, starting at the top-left)
     }
 */
-const Card = ({cardObject}) => (
+const CardDisplay = ({cardObject}) => (
     <Container fluid>
         <Row>
             <Col>
@@ -111,8 +111,8 @@ const Card = ({cardObject}) => (
     </Container>
 );
 
-Card.propTypes = {
+CardDisplay.propTypes = {
     "cardObject": PropTypes.object
 }
 
-export default Card;
+export default CardDisplay;

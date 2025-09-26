@@ -1,5 +1,8 @@
+import React, { useState } from 'react';
 import type { Route } from "./+types/build";
-import Card from '../components/Card/Card.jsx';
+import CardDisplay from '../components/Card/CardDisplay.jsx';
+import CardBuilder from '../components/Card/CardBuilder.jsx';
+import { Container, Row, Col } from "react-bootstrap";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,25 +11,27 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const cardStyle = {
-  width: "450px"
-};
-
-const cardObject = {
-  arcs:[true, true, true, true, true, true, true],
-  wards:[true, true, true, true, true, true, true],
-  character:[true]
-};
-
 export default function Build() {
+  const [cardObject, setCardObject] = useState({
+    arcs:[true, true, true, true, true, true, true, true],
+    wards:[true, true, true, true, true, true, true, true],
+    character:[true]
+  });
+
   return (
     <div>
-      <div>
-        Build
-      </div>
-      <div style={cardStyle}>
-        <Card cardObject={cardObject} />
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <CardBuilder cardObject={cardObject} onChange={(updated) => setCardObject(updated)} />
+          </Col>
+          <Col>
+            <div style={{width: "450px"}}>
+              <CardDisplay cardObject={cardObject} />
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
