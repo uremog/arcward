@@ -18,9 +18,7 @@ const WardMarker = React.forwardRef(({
   style = {},
   visible = true,
   ...props
-}, ref) => {
-  if (!visible) return null;
-  
+}, ref) => {  
   // Use the viewBox center (12,12) for rotation so behavior is stable regardless
   // of the CSS-rendered `size` prop.
   const VIEWBOX_CENTER = 12;
@@ -37,7 +35,7 @@ const WardMarker = React.forwardRef(({
       role={ariaLabel ? 'img' : 'presentation'}
       aria-label={ariaLabel}
       className={`inline-block ${className}`}
-      style={style}
+      style={{ ...style, visibility: visible ? 'visible' : 'hidden' }}
       {...props}
     >
       {title ? <title>{title}</title> : null}

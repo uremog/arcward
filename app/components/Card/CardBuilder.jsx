@@ -24,9 +24,9 @@ const CardBuilder = ({ cardObject, onChange }) => {
       className="mb-3"
       controlId={`${groupName}-form-${formId}`}
     >
-      <Form.Label className="fw-bold text-capitalize">
+      {/* <Form.Label className="fw-bold text-capitalize">
         {groupName}
-      </Form.Label>
+      </Form.Label> */}
       {items.map((checked, i) => (
         <Form.Check
           className="text-capitalize"

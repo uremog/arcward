@@ -23,8 +23,6 @@ const ArcMarker = React.forwardRef(({
   visible = true,
   ...props
 }, ref) => {
-  if (!visible) return null;
-  
   const baseDeg = DIRECTION_TO_DEG[direction] ?? 0;
   const totalDeg = baseDeg + Number(rotate || 0);
   const transform = `rotate(${totalDeg} 12 12)`;
@@ -40,15 +38,29 @@ const ArcMarker = React.forwardRef(({
       role={ariaLabel ? 'img' : 'presentation'}
       aria-label={ariaLabel}
       className={`inline-block ${className}`}
-      style={style}
+      style={{ ...style, visibility: visible ? 'visible' : 'hidden' }}
       {...props}
     >
       {title ? <title>{title}</title> : null}
       <g transform={transform}>
-        <line x1="3" y1="12" x2="17" y2="12" stroke={color} strokeWidth={strokeWidth}
-              strokeLinecap="round" strokeLinejoin="round" />
-        <polyline points="11 6 17 12 11 18" stroke={color} strokeWidth={strokeWidth}
-                  strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <line
+          x1="3"
+          y1="12"
+          x2="17"
+          y2="12"
+          stroke={color}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <polyline
+          points="11 6 17 12 11 18"
+          stroke={color}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
       </g>
     </svg>
   );
@@ -63,5 +75,6 @@ import ArcMarker from './ArcMarker';
 
 <ArcMarker direction="up" size={20} />
 <ArcMarker direction="left" rotate={45} size={32} />
+<ArcMarker visible={false} /> // takes up space but hidden
 
 */
