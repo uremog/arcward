@@ -1,0 +1,1 @@
+import{a2 as t,j as n}from"./chunk-B7RQU5TL-D-2o7E4h.js";function e({}){return[{title:"Arc Ward Play"},{name:"description",content:"Arc Ward Play"}]}const o=t(function(){return n.jsx("div",{children:"Play"})});export{o as default,e as meta};
