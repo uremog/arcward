@@ -17,3 +17,7 @@
     page-break-after: always;
   }
 }
+
+.card-preview {
+  width: 250px;
+}
