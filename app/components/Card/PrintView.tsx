@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import CardDisplay from "./CardDisplay.jsx";
-import type { CardObject } from "../../types.ts"; // import same type
+import type { CardObject } from "../../types";
 
 type PrintViewProps = {
   cardObjects: CardObject[];
@@ -16,6 +16,7 @@ export default function PrintView({ cardObjects }: PrintViewProps) {
     return result;
   };
 
+  // group into rows of 3 cards
   const rows: CardObject[][] = chunkArray(cardObjects, 3);
 
   return (
@@ -29,7 +30,7 @@ export default function PrintView({ cardObjects }: PrintViewProps) {
                 xs={4}
                 className="d-flex justify-content-center"
               >
-                <div style={{ width: "300px" }}>
+                <div className="print-card" style={{ width: "250px" }}>
                   <CardDisplay cardObject={cardObject} />
                 </div>
               </Col>

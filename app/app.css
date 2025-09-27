@@ -1,34 +1,18 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
-html,
-body {
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
-}
-
-/* print.css */
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  .print-view, .print-view * {
-    visibility: visible;
-  }
-  .print-view {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
+  /* Ensure each card is not split across pages */
+  .print-view .print-card {
+    page-break-inside: avoid;
+    break-inside: avoid; /* modern browsers */
   }
 
-  /* Force page breaks every 3 rows (3x3 grid = 9 cards) */
+  /* Reset row page breaks inside cards */
+  .print-view .row {
+    page-break-after: auto;
+  }
+
+  /* Insert page break every 3 outer rows (3x3 layout) */
   .print-view .row:nth-child(3n) {
     page-break-after: always;
   }

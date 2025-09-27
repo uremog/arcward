@@ -13,7 +13,7 @@ import CharacterMarker from "./CharacterMarker.jsx";
 */
 const CardDisplay = ({cardObject}) => (
     <Container fluid>
-        <Row>
+        <Row className="g-0">
             <Col>
                 <WardMarker variant="corner" rotate={180} visible={cardObject.wards[0]} />
             </Col>
@@ -24,47 +24,47 @@ const CardDisplay = ({cardObject}) => (
                 <WardMarker variant="corner" rotate={-90} visible={cardObject.wards[2]} />
             </Col>
         </Row>
-        <Row>
+        <Row className="g-0">
             <Col>
-                <Row>
-                    <Col></Col>
+                <Row className="g-0">
+                    <Col>&nbsp;</Col>
                     <Col>
                         <ArcMarker rotate={225} visible={cardObject.arcs[0]} />
                     </Col>
-                    <Col></Col>
+                    <Col>&nbsp;</Col>
                 </Row>
             </Col>
             <Col className="text-center">
                 <ArcMarker rotate={-90} visible={cardObject.arcs[1]} />
             </Col>
             <Col className="text-end">
-                <Row>
-                    <Col></Col>
+                <Row className="g-0">
+                    <Col>&nbsp;</Col>
                     <Col>
                         <ArcMarker rotate={-45} visible={cardObject.arcs[2]} />
                     </Col>
-                    <Col></Col>
+                    <Col>&nbsp;</Col>
                 </Row>
             </Col>
         </Row>
-        <Row>
+        <Row className="g-0">
             <Col>
-                <Row>
+                <Row className="g-0">
                     <Col>
                         <WardMarker rotate={90} visible={cardObject.wards[3]} />
                     </Col>
                     <Col>
                         <ArcMarker rotate={180} visible={cardObject.arcs[3]} />
                     </Col>
-                    <Col></Col>
+                    <Col>&nbsp;</Col>
                 </Row>
             </Col>
             <Col className="text-center">
                 <CharacterMarker visible={cardObject.character[0]} />
             </Col>
             <Col className="text-end">
-                <Row>
-                    <Col></Col>
+                <Row className="g-0">
+                    <Col>&nbsp;</Col>
                     <Col>
                         <ArcMarker rotate={0} visible={cardObject.arcs[4]} />
                     </Col>
@@ -74,30 +74,30 @@ const CardDisplay = ({cardObject}) => (
                 </Row>
             </Col>
         </Row>
-        <Row>
+        <Row className="g-0">
             <Col>
-                <Row>
-                    <Col></Col>
+                <Row className="g-0">
+                    <Col>&nbsp;</Col>
                     <Col>
                         <ArcMarker rotate={135} visible={cardObject.arcs[5]} />
                     </Col>
-                    <Col></Col>
+                    <Col>&nbsp;</Col>
                 </Row>
             </Col>
             <Col className="text-center">
                 <ArcMarker rotate={90} visible={cardObject.arcs[6]} />
             </Col>
             <Col className="text-end">
-                <Row>
-                    <Col></Col>
+                <Row className="g-0">
+                    <Col>&nbsp;</Col>
                     <Col>
                         <ArcMarker rotate={45} visible={cardObject.arcs[7]} />
                     </Col>
-                    <Col></Col>
+                    <Col>&nbsp;</Col>
                 </Row>
             </Col>
         </Row>
-        <Row>
+        <Row className="g-0">
             <Col>
                 <WardMarker variant="corner" rotate={90} visible={cardObject.wards[5]} />
             </Col>

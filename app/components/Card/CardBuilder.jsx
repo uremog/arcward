@@ -24,18 +24,25 @@ const CardBuilder = ({ cardObject, onChange }) => {
       className="mb-3"
       controlId={`${groupName}-form-${formId}`}
     >
-      {/* <Form.Label className="fw-bold text-capitalize">
-        {groupName}
-      </Form.Label> */}
       {items.map((checked, i) => (
         <Form.Check
           className="text-capitalize"
           key={`${groupName}-${formId}-${i}`}
           type="checkbox"
           id={`${groupName}-${formId}-${i}`}
-          label={`${groupName} ${i + 1}`}
           checked={checked}
           onChange={() => handleToggle(groupName, i)}
+          label={
+            <span
+              style={{
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              {`${groupName} ${i + 1}`}
+            </span>
+          }
         />
       ))}
     </Form.Group>

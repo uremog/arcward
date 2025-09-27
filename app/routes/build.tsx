@@ -76,8 +76,8 @@ export default function Build() {
                     </Accordion.Item>
                   </Accordion>
                 </Col>
-                <Col>
-                  <div style={{ width: "450px" }}>
+                <Col className="d-flex justify-content-center">
+                  <div style={{ width: "250px" }}>
                     <CardDisplay cardObject={cardObject} />
                   </div>
                 </Col>
@@ -87,6 +87,7 @@ export default function Build() {
             <Row>
               <Col>
                 <Button onClick={addCard}>Add Card</Button>
+
                 <Button
                   className="ms-2"
                   variant="secondary"
