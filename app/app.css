@@ -12,3 +12,24 @@ body {
     color-scheme: dark;
   }
 }
+
+/* print.css */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-view, .print-view * {
+    visibility: visible;
+  }
+  .print-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Force page breaks every 3 rows (3x3 grid = 9 cards) */
+  .print-view .row:nth-child(3n) {
+    page-break-after: always;
+  }
+}

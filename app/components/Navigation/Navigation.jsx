@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const Navigation = () => (
 
-	<Navbar bg="dark" variant="dark" sticky="top" expand="lg">
+	<Navbar bg="dark" variant="dark" sticky="top" expand="lg" id="navigation">
 		<Container>
 			<Navbar.Brand>Arc Ward</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav"/>
