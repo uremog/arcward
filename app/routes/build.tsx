@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import type { Route } from "./+types/build";
 import CardDisplay from "../components/Card/CardDisplay.jsx";
 import CardBuilder from "../components/Card/CardBuilder.jsx";
-import PrintView from "../components/Card/PrintView.jsx"; 
-import { Container, Row, Col, Button, Accordion } from "react-bootstrap";
-import type { CardObject } from "../types"; 
+import PrintView from "../components/Card/PrintView.jsx";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import type { CardObject } from "../types";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -30,6 +30,7 @@ export default function Build() {
   ]);
 
   const [printMode, setPrintMode] = useState(false);
+  const [expanded, setExpanded] = useState<boolean[]>([true]); // track collapses
 
   const handleUpdate = (index: number, updatedCard: CardObject) => {
     const newCards = [...cardObjects];
@@ -39,11 +40,20 @@ export default function Build() {
 
   const addCard = () => {
     setCardObjects([...cardObjects, cloneCard(defaultCard)]);
+    setExpanded([...expanded, true]); // new card starts expanded
   };
 
   const removeCard = (index: number) => {
     const newCards = cardObjects.filter((_, i) => i !== index);
+    const newExpanded = expanded.filter((_, i) => i !== index);
     setCardObjects(newCards);
+    setExpanded(newExpanded);
+  };
+
+  const toggleExpand = (index: number) => {
+    const newExpanded = [...expanded];
+    newExpanded[index] = !newExpanded[index];
+    setExpanded(newExpanded);
   };
 
   return (
@@ -52,32 +62,40 @@ export default function Build() {
         {!printMode ? (
           <>
             {cardObjects.map((cardObject, i) => (
-              <Row key={`card-${i}`} className="mb-2 align-items-center">
+              <Row key={`card-${i}`} className="mb-3 align-items-start">
                 <Col>
-                  <Accordion defaultActiveKey={`${i}`}>
-                    <Accordion.Item eventKey={`${i}`}>
-                      <Accordion.Header>Card {i + 1}</Accordion.Header>
-                      <Accordion.Body>
-                        <CardBuilder
-                          cardObject={cardObject}
-                          onChange={(updated) => handleUpdate(i, updated)}
-                        />
-                        <div className="text-right mt-2">
-                          <Button
-                            variant="danger"
-                            size="sm"
-                            onClick={() => removeCard(i)}
-                            disabled={cardObjects.length <= 1}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h5 className="mb-0">Card {i + 1}</h5>
+                    <Button
+                      size="sm"
+                      variant="outline-primary"
+                      onClick={() => toggleExpand(i)}
+                    >
+                      {expanded[i] ? "Hide" : "Show"}
+                    </Button>
+                  </div>
+
+                  {expanded[i] && (
+                    <>
+                      <CardBuilder
+                        cardObject={cardObject}
+                        onChange={(updated) => handleUpdate(i, updated)}
+                      />
+                      <div className="text-right mt-2">
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => removeCard(i)}
+                          disabled={cardObjects.length <= 1}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col className="d-flex justify-content-center">
-                  <div style={{ width: "250px" }}>
+                  <div className="card-preview">
                     <CardDisplay cardObject={cardObject} />
                   </div>
                 </Col>

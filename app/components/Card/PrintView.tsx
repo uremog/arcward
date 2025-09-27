@@ -30,7 +30,7 @@ export default function PrintView({ cardObjects }: PrintViewProps) {
                 xs={4}
                 className="d-flex justify-content-center"
               >
-                <div className="print-card" style={{ width: "250px" }}>
+                <div className="print-card card-preview">
                   <CardDisplay cardObject={cardObject} />
                 </div>
               </Col>
