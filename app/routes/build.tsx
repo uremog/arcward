@@ -4,7 +4,7 @@ import type { Route } from "./+types/build";
 import CardDisplay from "../components/Card/CardDisplay.jsx";
 import CardBuilder from "../components/Card/CardBuilder.jsx";
 import PrintView from "../components/Card/PrintView.jsx";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Collapse } from "react-bootstrap";
 import type { CardObject } from "../types";
 
 export function meta({}: Route.MetaArgs) {
@@ -14,7 +14,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-// Utility: simple deep clone
 const cloneCard = (card: CardObject): CardObject =>
   JSON.parse(JSON.stringify(card));
 
@@ -28,9 +27,8 @@ export default function Build() {
   const [cardObjects, setCardObjects] = useState<CardObject[]>([
     cloneCard(defaultCard),
   ]);
-
   const [printMode, setPrintMode] = useState(false);
-  const [expanded, setExpanded] = useState<boolean[]>([true]); // track collapses
+  const [expanded, setExpanded] = useState<boolean[]>([true]);
 
   const handleUpdate = (index: number, updatedCard: CardObject) => {
     const newCards = [...cardObjects];
@@ -40,14 +38,12 @@ export default function Build() {
 
   const addCard = () => {
     setCardObjects([...cardObjects, cloneCard(defaultCard)]);
-    setExpanded([...expanded, true]); // new card starts expanded
+    setExpanded([...expanded, true]);
   };
 
   const removeCard = (index: number) => {
-    const newCards = cardObjects.filter((_, i) => i !== index);
-    const newExpanded = expanded.filter((_, i) => i !== index);
-    setCardObjects(newCards);
-    setExpanded(newExpanded);
+    setCardObjects(cardObjects.filter((_, i) => i !== index));
+    setExpanded(expanded.filter((_, i) => i !== index));
   };
 
   const toggleExpand = (index: number) => {
@@ -75,8 +71,8 @@ export default function Build() {
                     </Button>
                   </div>
 
-                  {expanded[i] && (
-                    <>
+                  <Collapse in={expanded[i]}>
+                    <div>
                       <CardBuilder
                         cardObject={cardObject}
                         onChange={(updated) => handleUpdate(i, updated)}
@@ -91,8 +87,8 @@ export default function Build() {
                           Remove
                         </Button>
                       </div>
-                    </>
-                  )}
+                    </div>
+                  </Collapse>
                 </Col>
                 <Col className="d-flex justify-content-center">
                   <div className="card-preview">
@@ -105,7 +101,6 @@ export default function Build() {
             <Row>
               <Col>
                 <Button onClick={addCard}>Add Card</Button>
-
                 <Button
                   className="ms-2"
                   variant="secondary"
