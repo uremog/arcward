@@ -1,0 +1,1 @@
+import{a2 as t,j as o}from"./chunk-B7RQU5TL-D-2o7E4h.js";function n({}){return[{title:"Arc Ward"},{name:"description",content:"Welcome to Arc Ward!"}]}const i=t(function(){return o.jsx("div",{children:"Hello World!"})});export{i as default,n as meta};

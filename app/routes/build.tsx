@@ -54,8 +54,8 @@ export default function Build() {
             {cardObjects.map((cardObject, i) => (
               <Row key={`card-${i}`} className="mb-2 align-items-center">
                 <Col>
-                  <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
+                  <Accordion defaultActiveKey={`${i}`}>
+                    <Accordion.Item eventKey={`${i}`}>
                       <Accordion.Header>Card {i + 1}</Accordion.Header>
                       <Accordion.Body>
                         <CardBuilder
