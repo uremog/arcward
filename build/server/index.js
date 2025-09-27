@@ -4,7 +4,7 @@ import { createReadableStreamFromReadable } from "@react-router/node";
 import { ServerRouter, UNSAFE_withComponentProps, Outlet, UNSAFE_withErrorBoundaryProps, isRouteErrorResponse, Meta, Links, ScrollRestoration, Scripts } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { Navbar, Container, Nav, Row, Col, Form, Accordion, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Row, Col, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import React, { useId, useState } from "react";
 import PropTypes from "prop-types";
@@ -445,7 +445,7 @@ function PrintView({ cardObjects }) {
     {
       xs: 4,
       className: "d-flex justify-content-center",
-      children: /* @__PURE__ */ jsx("div", { className: "print-card", style: { width: "250px" }, children: /* @__PURE__ */ jsx(CardDisplay, { cardObject }) })
+      children: /* @__PURE__ */ jsx("div", { className: "print-card card-preview", children: /* @__PURE__ */ jsx(CardDisplay, { cardObject }) })
     },
     `col-${rowIndex}-${colIndex}`
   )) }, `row-${rowIndex}`)) }) });
@@ -467,6 +467,7 @@ const build = UNSAFE_withComponentProps(function Build() {
   };
   const [cardObjects, setCardObjects] = useState([cloneCard(defaultCard)]);
   const [printMode, setPrintMode] = useState(false);
+  const [expanded, setExpanded] = useState([true]);
   const handleUpdate = (index, updatedCard) => {
     const newCards = [...cardObjects];
     newCards[index] = updatedCard;
@@ -474,47 +475,56 @@ const build = UNSAFE_withComponentProps(function Build() {
   };
   const addCard = () => {
     setCardObjects([...cardObjects, cloneCard(defaultCard)]);
+    setExpanded([...expanded, true]);
   };
   const removeCard = (index) => {
     const newCards = cardObjects.filter((_, i) => i !== index);
+    const newExpanded = expanded.filter((_, i) => i !== index);
     setCardObjects(newCards);
+    setExpanded(newExpanded);
+  };
+  const toggleExpand = (index) => {
+    const newExpanded = [...expanded];
+    newExpanded[index] = !newExpanded[index];
+    setExpanded(newExpanded);
   };
   return /* @__PURE__ */ jsx("div", {
     id: "build",
     children: /* @__PURE__ */ jsx(Container, {
       children: !printMode ? /* @__PURE__ */ jsxs(Fragment, {
         children: [cardObjects.map((cardObject, i) => /* @__PURE__ */ jsxs(Row, {
-          className: "mb-2 align-items-center",
-          children: [/* @__PURE__ */ jsx(Col, {
-            children: /* @__PURE__ */ jsx(Accordion, {
-              defaultActiveKey: "0",
-              children: /* @__PURE__ */ jsxs(Accordion.Item, {
-                eventKey: "0",
-                children: [/* @__PURE__ */ jsxs(Accordion.Header, {
-                  children: ["Card ", i + 1]
-                }), /* @__PURE__ */ jsxs(Accordion.Body, {
-                  children: [/* @__PURE__ */ jsx(CardBuilder, {
-                    cardObject,
-                    onChange: (updated) => handleUpdate(i, updated)
-                  }), /* @__PURE__ */ jsx("div", {
-                    className: "text-right mt-2",
-                    children: /* @__PURE__ */ jsx(Button, {
-                      variant: "danger",
-                      size: "sm",
-                      onClick: () => removeCard(i),
-                      disabled: cardObjects.length <= 1,
-                      children: "Remove"
-                    })
-                  })]
-                })]
-              })
-            })
+          className: "mb-3 align-items-start",
+          children: [/* @__PURE__ */ jsxs(Col, {
+            children: [/* @__PURE__ */ jsxs("div", {
+              className: "d-flex justify-content-between align-items-center mb-2",
+              children: [/* @__PURE__ */ jsxs("h5", {
+                className: "mb-0",
+                children: ["Card ", i + 1]
+              }), /* @__PURE__ */ jsx(Button, {
+                size: "sm",
+                variant: "outline-primary",
+                onClick: () => toggleExpand(i),
+                children: expanded[i] ? "Hide" : "Show"
+              })]
+            }), expanded[i] && /* @__PURE__ */ jsxs(Fragment, {
+              children: [/* @__PURE__ */ jsx(CardBuilder, {
+                cardObject,
+                onChange: (updated) => handleUpdate(i, updated)
+              }), /* @__PURE__ */ jsx("div", {
+                className: "text-right mt-2",
+                children: /* @__PURE__ */ jsx(Button, {
+                  variant: "danger",
+                  size: "sm",
+                  onClick: () => removeCard(i),
+                  disabled: cardObjects.length <= 1,
+                  children: "Remove"
+                })
+              })]
+            })]
           }), /* @__PURE__ */ jsx(Col, {
             className: "d-flex justify-content-center",
             children: /* @__PURE__ */ jsx("div", {
-              style: {
-                width: "250px"
-              },
+              className: "card-preview",
               children: /* @__PURE__ */ jsx(CardDisplay, {
                 cardObject
               })
@@ -578,7 +588,7 @@ const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: play,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-CYl7dQTx.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/index-wirpkLcK.js", "/assets/dom-export-Cqp1mW11.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-CyDvSwsp.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/index-wirpkLcK.js", "/assets/dom-export-Cqp1mW11.js", "/assets/Row-D4iuzOLX.js"], "css": ["/assets/root-Bd55mFi0.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-D9hv-b5v.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/build": { "id": "routes/build", "parentId": "root", "path": "build", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/build-DuUvRTzh.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/Row-D4iuzOLX.js", "/assets/index-wirpkLcK.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/play": { "id": "routes/play", "parentId": "root", "path": "play", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/play-iNoUi98c.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-957442b3.js", "version": "957442b3", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/arcward/assets/entry.client-BMprW2V9.js", "imports": ["/arcward/assets/chunk-B7RQU5TL-vUsKMHXo.js", "/arcward/assets/dom-export-DOZ-gTha.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/arcward/assets/root-BpIzrtBf.js", "imports": ["/arcward/assets/chunk-B7RQU5TL-vUsKMHXo.js", "/arcward/assets/dom-export-DOZ-gTha.js", "/arcward/assets/Row-BQaat_U0.js"], "css": ["/arcward/assets/root-CtzjHizP.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/arcward/assets/home-DeqpRm8R.js", "imports": ["/arcward/assets/chunk-B7RQU5TL-vUsKMHXo.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/build": { "id": "routes/build", "parentId": "root", "path": "build", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/arcward/assets/build-C6ng633W.js", "imports": ["/arcward/assets/chunk-B7RQU5TL-vUsKMHXo.js", "/arcward/assets/Row-BQaat_U0.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/play": { "id": "routes/play", "parentId": "root", "path": "play", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/arcward/assets/play-DsaUJ97m.js", "imports": ["/arcward/assets/chunk-B7RQU5TL-vUsKMHXo.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/arcward/assets/manifest-cf880a2f.js", "version": "cf880a2f", "sri": void 0 };
 const assetsBuildDirectory = "build\\client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
@@ -586,7 +596,7 @@ const ssr = true;
 const isSpaMode = false;
 const prerender = [];
 const routeDiscovery = { "mode": "lazy", "manifestPath": "/__manifest" };
-const publicPath = "/";
+const publicPath = "/arcward/";
 const entry = { module: entryServer };
 const routes = {
   "root": {
