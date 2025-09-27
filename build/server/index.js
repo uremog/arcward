@@ -1,9 +1,13 @@
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { PassThrough } from "node:stream";
 import { createReadableStreamFromReadable } from "@react-router/node";
 import { ServerRouter, UNSAFE_withComponentProps, Outlet, UNSAFE_withErrorBoundaryProps, isRouteErrorResponse, Meta, Links, ScrollRestoration, Scripts } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import { Navbar, Container, Nav, Row, Col, Form, Accordion, Button } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import React, { useId, useState } from "react";
+import PropTypes from "prop-types";
 const streamTimeout = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, routerContext, loadContext) {
   return new Promise((resolve, reject) => {
@@ -54,6 +58,20 @@ const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   default: handleRequest,
   streamTimeout
 }, Symbol.toStringTag, { value: "Module" }));
+const Navigation = () => /* @__PURE__ */ jsx(Navbar, { bg: "dark", variant: "dark", sticky: "top", expand: "lg", id: "navigation", children: /* @__PURE__ */ jsxs(Container, { children: [
+  /* @__PURE__ */ jsx(Navbar.Brand, { children: "Arc Ward" }),
+  /* @__PURE__ */ jsx(Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
+  /* @__PURE__ */ jsxs(Navbar.Collapse, { id: "basic-navbar-nav", children: [
+    /* @__PURE__ */ jsxs(Nav, { className: "me-auto", children: [
+      /* @__PURE__ */ jsx(LinkContainer, { to: "/build", children: /* @__PURE__ */ jsx(Nav.Link, { children: "Build" }) }),
+      /* @__PURE__ */ jsx(LinkContainer, { to: "/play", children: /* @__PURE__ */ jsx(Nav.Link, { children: "Play" }) })
+    ] }),
+    /* @__PURE__ */ jsxs(Nav, { className: "d-flex", children: [
+      /* @__PURE__ */ jsx(LinkContainer, { to: "/", children: /* @__PURE__ */ jsx(Nav.Link, { children: "FAQ" }) }),
+      /* @__PURE__ */ jsx(LinkContainer, { to: "/", children: /* @__PURE__ */ jsx(Nav.Link, { children: "Contact" }) })
+    ] })
+  ] })
+] }) });
 const links = () => [{
   rel: "preconnect",
   href: "https://fonts.googleapis.com"
@@ -83,7 +101,15 @@ function Layout({
   });
 }
 const root = UNSAFE_withComponentProps(function App() {
-  return /* @__PURE__ */ jsx(Outlet, {});
+  return /* @__PURE__ */ jsxs("div", {
+    children: [/* @__PURE__ */ jsx(Navigation, {}), /* @__PURE__ */ jsx(Container, {
+      children: /* @__PURE__ */ jsx(Row, {
+        children: /* @__PURE__ */ jsx(Col, {
+          children: /* @__PURE__ */ jsx(Outlet, {})
+        })
+      })
+    })]
+  });
 });
 const ErrorBoundary = UNSAFE_withErrorBoundaryProps(function ErrorBoundary2({
   error
@@ -111,110 +137,448 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: root,
   links
 }, Symbol.toStringTag, { value: "Module" }));
-const logoDark = "/assets/logo-dark-pX2395Y0.svg";
-const logoLight = "/assets/logo-light-CVbx2LBR.svg";
-function Welcome() {
-  return /* @__PURE__ */ jsx("main", { className: "flex items-center justify-center pt-16 pb-4", children: /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-center gap-16 min-h-0", children: [
-    /* @__PURE__ */ jsx("header", { className: "flex flex-col items-center gap-9", children: /* @__PURE__ */ jsxs("div", { className: "w-[500px] max-w-[100vw] p-4", children: [
-      /* @__PURE__ */ jsx(
-        "img",
-        {
-          src: logoLight,
-          alt: "React Router",
-          className: "block w-full dark:hidden"
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        "img",
-        {
-          src: logoDark,
-          alt: "React Router",
-          className: "hidden w-full dark:block"
-        }
-      )
-    ] }) }),
-    /* @__PURE__ */ jsx("div", { className: "max-w-[300px] w-full space-y-6 px-4", children: /* @__PURE__ */ jsxs("nav", { className: "rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4", children: [
-      /* @__PURE__ */ jsx("p", { className: "leading-6 text-gray-700 dark:text-gray-200 text-center", children: "What's next?" }),
-      /* @__PURE__ */ jsx("ul", { children: resources.map(({ href, text, icon }) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(
-        "a",
-        {
-          className: "group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500",
-          href,
-          target: "_blank",
-          rel: "noreferrer",
-          children: [
-            icon,
-            text
-          ]
-        }
-      ) }, href)) })
-    ] }) })
-  ] }) });
-}
-const resources = [
-  {
-    href: "https://reactrouter.com/docs",
-    text: "React Router Docs",
-    icon: /* @__PURE__ */ jsx(
-      "svg",
-      {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: "24",
-        height: "20",
-        viewBox: "0 0 20 20",
-        fill: "none",
-        className: "stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300",
-        children: /* @__PURE__ */ jsx(
-          "path",
-          {
-            d: "M9.99981 10.0751V9.99992M17.4688 17.4688C15.889 19.0485 11.2645 16.9853 7.13958 12.8604C3.01467 8.73546 0.951405 4.11091 2.53116 2.53116C4.11091 0.951405 8.73546 3.01467 12.8604 7.13958C16.9853 11.2645 19.0485 15.889 17.4688 17.4688ZM2.53132 17.4688C0.951566 15.8891 3.01483 11.2645 7.13974 7.13963C11.2647 3.01471 15.8892 0.951453 17.469 2.53121C19.0487 4.11096 16.9854 8.73551 12.8605 12.8604C8.73562 16.9853 4.11107 19.0486 2.53132 17.4688Z",
-            strokeWidth: "1.5",
-            strokeLinecap: "round"
-          }
-        )
-      }
-    )
-  },
-  {
-    href: "https://rmx.as/discord",
-    text: "Join Discord",
-    icon: /* @__PURE__ */ jsx(
-      "svg",
-      {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: "24",
-        height: "20",
-        viewBox: "0 0 24 20",
-        fill: "none",
-        className: "stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300",
-        children: /* @__PURE__ */ jsx(
-          "path",
-          {
-            d: "M15.0686 1.25995L14.5477 1.17423L14.2913 1.63578C14.1754 1.84439 14.0545 2.08275 13.9422 2.31963C12.6461 2.16488 11.3406 2.16505 10.0445 2.32014C9.92822 2.08178 9.80478 1.84975 9.67412 1.62413L9.41449 1.17584L8.90333 1.25995C7.33547 1.51794 5.80717 1.99419 4.37748 2.66939L4.19 2.75793L4.07461 2.93019C1.23864 7.16437 0.46302 11.3053 0.838165 15.3924L0.868838 15.7266L1.13844 15.9264C2.81818 17.1714 4.68053 18.1233 6.68582 18.719L7.18892 18.8684L7.50166 18.4469C7.96179 17.8268 8.36504 17.1824 8.709 16.4944L8.71099 16.4904C10.8645 17.0471 13.128 17.0485 15.2821 16.4947C15.6261 17.1826 16.0293 17.8269 16.4892 18.4469L16.805 18.8725L17.3116 18.717C19.3056 18.105 21.1876 17.1751 22.8559 15.9238L23.1224 15.724L23.1528 15.3923C23.5873 10.6524 22.3579 6.53306 19.8947 2.90714L19.7759 2.73227L19.5833 2.64518C18.1437 1.99439 16.6386 1.51826 15.0686 1.25995ZM16.6074 10.7755L16.6074 10.7756C16.5934 11.6409 16.0212 12.1444 15.4783 12.1444C14.9297 12.1444 14.3493 11.6173 14.3493 10.7877C14.3493 9.94885 14.9378 9.41192 15.4783 9.41192C16.0471 9.41192 16.6209 9.93851 16.6074 10.7755ZM8.49373 12.1444C7.94513 12.1444 7.36471 11.6173 7.36471 10.7877C7.36471 9.94885 7.95323 9.41192 8.49373 9.41192C9.06038 9.41192 9.63892 9.93712 9.6417 10.7815C9.62517 11.6239 9.05462 12.1444 8.49373 12.1444Z",
-            strokeWidth: "1.5"
-          }
-        )
-      }
-    )
-  }
-];
-function meta({}) {
+function meta$2({}) {
   return [{
-    title: "New React Router App"
+    title: "Arc Ward"
   }, {
     name: "description",
-    content: "Welcome to React Router!"
+    content: "Welcome to Arc Ward!"
   }];
 }
 const home = UNSAFE_withComponentProps(function Home() {
-  return /* @__PURE__ */ jsx(Welcome, {});
+  return /* @__PURE__ */ jsx("div", {
+    children: "Hello World!"
+  });
 });
 const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: home,
+  meta: meta$2
+}, Symbol.toStringTag, { value: "Module" }));
+const DIRECTION_TO_DEG = {
+  right: 0,
+  down: 90,
+  left: 180,
+  up: -90
+};
+const ArcMarker = React.forwardRef(({
+  direction = "right",
+  size = 24,
+  strokeWidth = 2,
+  color = "currentColor",
+  rotate = 0,
+  className = "",
+  title = "Arc Marker",
+  ariaLabel,
+  style = {},
+  visible = true,
+  ...props
+}, ref) => {
+  const baseDeg = DIRECTION_TO_DEG[direction] ?? 0;
+  const totalDeg = baseDeg + Number(rotate || 0);
+  const transform = `rotate(${totalDeg} 12 12)`;
+  return /* @__PURE__ */ jsxs(
+    "svg",
+    {
+      ref,
+      width: size,
+      height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg",
+      role: ariaLabel ? "img" : "presentation",
+      "aria-label": ariaLabel,
+      className: `inline-block ${className}`,
+      style: { ...style, visibility: visible ? "visible" : "hidden" },
+      ...props,
+      children: [
+        title ? /* @__PURE__ */ jsx("title", { children: title }) : null,
+        /* @__PURE__ */ jsxs("g", { transform, children: [
+          /* @__PURE__ */ jsx(
+            "line",
+            {
+              x1: "3",
+              y1: "12",
+              x2: "17",
+              y2: "12",
+              stroke: color,
+              strokeWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "polyline",
+            {
+              points: "11 6 17 12 11 18",
+              stroke: color,
+              strokeWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              fill: "none"
+            }
+          )
+        ] })
+      ]
+    }
+  );
+});
+ArcMarker.displayName = "ArcMarker";
+const WardMarker = React.forwardRef(({
+  variant = "line",
+  // 'line' | 'corner'
+  size = 24,
+  strokeWidth = 2,
+  color = "currentColor",
+  rotate = 0,
+  className = "",
+  title = "Ward Marker",
+  ariaLabel,
+  style = {},
+  visible = true,
+  ...props
+}, ref) => {
+  const VIEWBOX_CENTER = 12;
+  const transform = `rotate(${rotate} ${VIEWBOX_CENTER} ${VIEWBOX_CENTER})`;
+  return /* @__PURE__ */ jsxs(
+    "svg",
+    {
+      ref,
+      width: size,
+      height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg",
+      role: ariaLabel ? "img" : "presentation",
+      "aria-label": ariaLabel,
+      className: `inline-block ${className}`,
+      style: { ...style, visibility: visible ? "visible" : "hidden" },
+      ...props,
+      children: [
+        title ? /* @__PURE__ */ jsx("title", { children: title }) : null,
+        /* @__PURE__ */ jsxs("g", { transform, children: [
+          variant === "line" && // Centered horizontal line (midpoint at 12)
+          /* @__PURE__ */ jsx(
+            "line",
+            {
+              x1: "6",
+              y1: "12",
+              x2: "18",
+              y2: "12",
+              stroke: color,
+              strokeWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round"
+            }
+          ),
+          variant === "corner" && // Corner whose centroid is at (12,12): points chosen so the average of
+          // the three polyline points equals (12,12). This keeps the L-shape
+          // visually centered when rotated.
+          // Points: (6,15) -> (15,15) -> (15,6)
+          /* @__PURE__ */ jsx(
+            "polyline",
+            {
+              points: "6,15 15,15 15,6",
+              stroke: color,
+              strokeWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              fill: "none"
+            }
+          )
+        ] })
+      ]
+    }
+  );
+});
+WardMarker.displayName = "WardMarker";
+const CharacterMarker = React.forwardRef(({
+  size = 24,
+  // width and height of the SVG
+  radius = null,
+  // if null, computed as a fraction of size
+  strokeWidth = 2,
+  fill = "currentColor",
+  stroke = "none",
+  className = "",
+  title = "Character Marker",
+  ariaLabel,
+  style = {},
+  visible = true,
+  ...props
+}, ref) => {
+  if (!visible) return null;
+  const VIEWBOX_SIZE = 24;
+  const cx = VIEWBOX_SIZE / 2;
+  const cy = VIEWBOX_SIZE / 2;
+  const defaultRadius = 6.5;
+  const r = radius == null ? defaultRadius : radius;
+  return /* @__PURE__ */ jsxs(
+    "svg",
+    {
+      ref,
+      width: size,
+      height: size,
+      viewBox: `0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`,
+      xmlns: "http://www.w3.org/2000/svg",
+      role: ariaLabel ? "img" : "presentation",
+      "aria-label": ariaLabel,
+      className: `inline-block ${className}`,
+      style,
+      ...props,
+      children: [
+        title ? /* @__PURE__ */ jsx("title", { children: title }) : null,
+        /* @__PURE__ */ jsx("circle", { cx, cy, r, fill, stroke, strokeWidth })
+      ]
+    }
+  );
+});
+CharacterMarker.displayName = "CharacterMarker";
+const CardDisplay = ({ cardObject }) => /* @__PURE__ */ jsxs(Container, { fluid: true, children: [
+  /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+    /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(WardMarker, { variant: "corner", rotate: 180, visible: cardObject.wards[0] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-center", children: /* @__PURE__ */ jsx(WardMarker, { rotate: 0, visible: cardObject.wards[1] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-end", children: /* @__PURE__ */ jsx(WardMarker, { variant: "corner", rotate: -90, visible: cardObject.wards[2] }) })
+  ] }),
+  /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+    /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: " " }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 225, visible: cardObject.arcs[0] }) }),
+      /* @__PURE__ */ jsx(Col, { children: " " })
+    ] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-center", children: /* @__PURE__ */ jsx(ArcMarker, { rotate: -90, visible: cardObject.arcs[1] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-end", children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: " " }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: -45, visible: cardObject.arcs[2] }) }),
+      /* @__PURE__ */ jsx(Col, { children: " " })
+    ] }) })
+  ] }),
+  /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+    /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(WardMarker, { rotate: 90, visible: cardObject.wards[3] }) }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 180, visible: cardObject.arcs[3] }) }),
+      /* @__PURE__ */ jsx(Col, { children: " " })
+    ] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-center", children: /* @__PURE__ */ jsx(CharacterMarker, { visible: cardObject.character[0] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-end", children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: " " }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 0, visible: cardObject.arcs[4] }) }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(WardMarker, { rotate: 90, visible: cardObject.wards[4] }) })
+    ] }) })
+  ] }),
+  /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+    /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: " " }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 135, visible: cardObject.arcs[5] }) }),
+      /* @__PURE__ */ jsx(Col, { children: " " })
+    ] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-center", children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 90, visible: cardObject.arcs[6] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-end", children: /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+      /* @__PURE__ */ jsx(Col, { children: " " }),
+      /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(ArcMarker, { rotate: 45, visible: cardObject.arcs[7] }) }),
+      /* @__PURE__ */ jsx(Col, { children: " " })
+    ] }) })
+  ] }),
+  /* @__PURE__ */ jsxs(Row, { className: "g-0", children: [
+    /* @__PURE__ */ jsx(Col, { children: /* @__PURE__ */ jsx(WardMarker, { variant: "corner", rotate: 90, visible: cardObject.wards[5] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-center", children: /* @__PURE__ */ jsx(WardMarker, { rotate: 0, visible: cardObject.wards[6] }) }),
+    /* @__PURE__ */ jsx(Col, { className: "text-end", children: /* @__PURE__ */ jsx(WardMarker, { variant: "corner", rotate: 0, visible: cardObject.wards[7] }) })
+  ] })
+] });
+CardDisplay.propTypes = {
+  "cardObject": PropTypes.object
+};
+const CardBuilder = ({ cardObject, onChange }) => {
+  const formId = useId();
+  if (!cardObject) return null;
+  const handleToggle = (group, index) => {
+    const updated = { ...cardObject };
+    updated[group] = [...updated[group]];
+    updated[group][index] = !updated[group][index];
+    onChange(updated);
+  };
+  const renderGroup = (groupName, items) => /* @__PURE__ */ jsx(
+    Form.Group,
+    {
+      className: "mb-3",
+      controlId: `${groupName}-form-${formId}`,
+      children: items.map((checked, i) => /* @__PURE__ */ jsx(
+        Form.Check,
+        {
+          className: "text-capitalize",
+          type: "checkbox",
+          id: `${groupName}-${formId}-${i}`,
+          checked,
+          onChange: () => handleToggle(groupName, i),
+          label: /* @__PURE__ */ jsx(
+            "span",
+            {
+              style: {
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center"
+              },
+              children: `${groupName} ${i + 1}`
+            }
+          )
+        },
+        `${groupName}-${formId}-${i}`
+      ))
+    }
+  );
+  return /* @__PURE__ */ jsx(Form, { children: /* @__PURE__ */ jsx(Container, { children: /* @__PURE__ */ jsxs(Row, { children: [
+    /* @__PURE__ */ jsx(Col, { children: renderGroup("arcs", cardObject.arcs) }),
+    /* @__PURE__ */ jsx(Col, { children: renderGroup("wards", cardObject.wards) })
+  ] }) }) });
+};
+function PrintView({ cardObjects }) {
+  const chunkArray = (arr, size) => {
+    const result = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
+  };
+  const rows = chunkArray(cardObjects, 3);
+  return /* @__PURE__ */ jsx("div", { className: "print-view", children: /* @__PURE__ */ jsx(Container, { fluid: true, children: rows.map((row, rowIndex) => /* @__PURE__ */ jsx(Row, { className: "mb-4", children: row.map((cardObject, colIndex) => /* @__PURE__ */ jsx(
+    Col,
+    {
+      xs: 4,
+      className: "d-flex justify-content-center",
+      children: /* @__PURE__ */ jsx("div", { className: "print-card", style: { width: "250px" }, children: /* @__PURE__ */ jsx(CardDisplay, { cardObject }) })
+    },
+    `col-${rowIndex}-${colIndex}`
+  )) }, `row-${rowIndex}`)) }) });
+}
+function meta$1({}) {
+  return [{
+    title: "Arc Ward Build"
+  }, {
+    name: "description",
+    content: "Arc Ward Build"
+  }];
+}
+const cloneCard = (card) => JSON.parse(JSON.stringify(card));
+const build = UNSAFE_withComponentProps(function Build() {
+  const defaultCard = {
+    arcs: [true, true, true, true, true, true, true, true],
+    wards: [true, true, true, true, true, true, true, true],
+    character: [true]
+  };
+  const [cardObjects, setCardObjects] = useState([cloneCard(defaultCard)]);
+  const [printMode, setPrintMode] = useState(false);
+  const handleUpdate = (index, updatedCard) => {
+    const newCards = [...cardObjects];
+    newCards[index] = updatedCard;
+    setCardObjects(newCards);
+  };
+  const addCard = () => {
+    setCardObjects([...cardObjects, cloneCard(defaultCard)]);
+  };
+  const removeCard = (index) => {
+    const newCards = cardObjects.filter((_, i) => i !== index);
+    setCardObjects(newCards);
+  };
+  return /* @__PURE__ */ jsx("div", {
+    id: "build",
+    children: /* @__PURE__ */ jsx(Container, {
+      children: !printMode ? /* @__PURE__ */ jsxs(Fragment, {
+        children: [cardObjects.map((cardObject, i) => /* @__PURE__ */ jsxs(Row, {
+          className: "mb-2 align-items-center",
+          children: [/* @__PURE__ */ jsx(Col, {
+            children: /* @__PURE__ */ jsx(Accordion, {
+              defaultActiveKey: "0",
+              children: /* @__PURE__ */ jsxs(Accordion.Item, {
+                eventKey: "0",
+                children: [/* @__PURE__ */ jsxs(Accordion.Header, {
+                  children: ["Card ", i + 1]
+                }), /* @__PURE__ */ jsxs(Accordion.Body, {
+                  children: [/* @__PURE__ */ jsx(CardBuilder, {
+                    cardObject,
+                    onChange: (updated) => handleUpdate(i, updated)
+                  }), /* @__PURE__ */ jsx("div", {
+                    className: "text-right mt-2",
+                    children: /* @__PURE__ */ jsx(Button, {
+                      variant: "danger",
+                      size: "sm",
+                      onClick: () => removeCard(i),
+                      disabled: cardObjects.length <= 1,
+                      children: "Remove"
+                    })
+                  })]
+                })]
+              })
+            })
+          }), /* @__PURE__ */ jsx(Col, {
+            className: "d-flex justify-content-center",
+            children: /* @__PURE__ */ jsx("div", {
+              style: {
+                width: "250px"
+              },
+              children: /* @__PURE__ */ jsx(CardDisplay, {
+                cardObject
+              })
+            })
+          })]
+        }, `card-${i}`)), /* @__PURE__ */ jsx(Row, {
+          children: /* @__PURE__ */ jsxs(Col, {
+            children: [/* @__PURE__ */ jsx(Button, {
+              onClick: addCard,
+              children: "Add Card"
+            }), /* @__PURE__ */ jsx(Button, {
+              className: "ms-2",
+              variant: "secondary",
+              onClick: () => setPrintMode(true),
+              children: "Switch to Print View"
+            })]
+          })
+        })]
+      }) : /* @__PURE__ */ jsxs(Fragment, {
+        children: [/* @__PURE__ */ jsx(PrintView, {
+          cardObjects
+        }), /* @__PURE__ */ jsx(Row, {
+          className: "mt-3",
+          children: /* @__PURE__ */ jsxs(Col, {
+            children: [/* @__PURE__ */ jsx(Button, {
+              variant: "primary",
+              onClick: () => window.print(),
+              children: "Print"
+            }), /* @__PURE__ */ jsx(Button, {
+              className: "ms-2",
+              variant: "secondary",
+              onClick: () => setPrintMode(false),
+              children: "Back to Edit View"
+            })]
+          })
+        })]
+      })
+    })
+  });
+});
+const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: build,
+  meta: meta$1
+}, Symbol.toStringTag, { value: "Module" }));
+function meta({}) {
+  return [{
+    title: "Arc Ward Play"
+  }, {
+    name: "description",
+    content: "Arc Ward Play"
+  }];
+}
+const play = UNSAFE_withComponentProps(function Play() {
+  return /* @__PURE__ */ jsx("div", {
+    children: "Play"
+  });
+});
+const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: play,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-5NZ9AFj8.js", "imports": ["/assets/chunk-B7RQU5TL-DkG0e22m.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-BTU4SxuT.js", "imports": ["/assets/chunk-B7RQU5TL-DkG0e22m.js"], "css": ["/assets/root-L-Bv-Fnr.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-DmMhBD5t.js", "imports": ["/assets/chunk-B7RQU5TL-DkG0e22m.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-3595dfd5.js", "version": "3595dfd5", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-CYl7dQTx.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/index-wirpkLcK.js", "/assets/dom-export-Cqp1mW11.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-CyDvSwsp.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/index-wirpkLcK.js", "/assets/dom-export-Cqp1mW11.js", "/assets/Row-D4iuzOLX.js"], "css": ["/assets/root-Bd55mFi0.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-D9hv-b5v.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/build": { "id": "routes/build", "parentId": "root", "path": "build", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/build-DuUvRTzh.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js", "/assets/Row-D4iuzOLX.js", "/assets/index-wirpkLcK.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/play": { "id": "routes/play", "parentId": "root", "path": "play", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/play-iNoUi98c.js", "imports": ["/assets/chunk-B7RQU5TL-D-2o7E4h.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-957442b3.js", "version": "957442b3", "sri": void 0 };
 const assetsBuildDirectory = "build\\client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
@@ -240,6 +604,22 @@ const routes = {
     index: true,
     caseSensitive: void 0,
     module: route1
+  },
+  "routes/build": {
+    id: "routes/build",
+    parentId: "root",
+    path: "build",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route2
+  },
+  "routes/play": {
+    id: "routes/play",
+    parentId: "root",
+    path: "play",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route3
   }
 };
 export {
