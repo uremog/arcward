@@ -4,7 +4,7 @@ import type { Route } from "./+types/build";
 import CardDisplay from "../components/Card/CardDisplay.jsx";
 import CardBuilder from "../components/Card/CardBuilder.jsx";
 import PrintView from "../components/Card/PrintView.jsx";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Collapse } from "react-bootstrap";
 import type { CardObject } from "../types";
 
 export function meta({}: Route.MetaArgs) {
@@ -14,7 +14,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-// Utility: simple deep clone
 const cloneCard = (card: CardObject): CardObject =>
   JSON.parse(JSON.stringify(card));
 
@@ -28,9 +27,8 @@ export default function Build() {
   const [cardObjects, setCardObjects] = useState<CardObject[]>([
     cloneCard(defaultCard),
   ]);
-
   const [printMode, setPrintMode] = useState(false);
-  const [expanded, setExpanded] = useState<boolean[]>([true]); // track collapses
+  const [expanded, setExpanded] = useState<boolean[]>([true]);
 
   const handleUpdate = (index: number, updatedCard: CardObject) => {
     const newCards = [...cardObjects];
@@ -40,14 +38,12 @@ export default function Build() {
 
   const addCard = () => {
     setCardObjects([...cardObjects, cloneCard(defaultCard)]);
-    setExpanded([...expanded, true]); // new card starts expanded
+    setExpanded([...expanded, true]);
   };
 
   const removeCard = (index: number) => {
-    const newCards = cardObjects.filter((_, i) => i !== index);
-    const newExpanded = expanded.filter((_, i) => i !== index);
-    setCardObjects(newCards);
-    setExpanded(newExpanded);
+    setCardObjects(cardObjects.filter((_, i) => i !== index));
+    setExpanded(expanded.filter((_, i) => i !== index));
   };
 
   const toggleExpand = (index: number) => {
@@ -58,84 +54,83 @@ export default function Build() {
 
   return (
     <div id="build">
-      <Container>
-        {!printMode ? (
-          <>
-            {cardObjects.map((cardObject, i) => (
-              <Row key={`card-${i}`} className="mb-3 align-items-start">
-                <Col>
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h5 className="mb-0">Card {i + 1}</h5>
-                    <Button
-                      size="sm"
-                      variant="outline-primary"
-                      onClick={() => toggleExpand(i)}
-                    >
-                      {expanded[i] ? "Hide" : "Show"}
-                    </Button>
-                  </div>
-
-                  {expanded[i] && (
-                    <>
-                      <CardBuilder
-                        cardObject={cardObject}
-                        onChange={(updated) => handleUpdate(i, updated)}
-                      />
-                      <div className="text-right mt-2">
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => removeCard(i)}
-                          disabled={cardObjects.length <= 1}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col className="d-flex justify-content-center">
-                  <div className="card-preview">
-                    <CardDisplay cardObject={cardObject} />
-                  </div>
-                </Col>
-              </Row>
-            ))}
-
-            <Row>
+      {!printMode ? (
+        <Container>
+          {cardObjects.map((cardObject, i) => (
+            <Row
+              key={`card-${i}`}
+              className="mb-3 align-items-start border rounded p-3"
+            >
               <Col>
-                <Button onClick={addCard}>Add Card</Button>
+                <div className="d-flex justify-content-between align-items-center mb-1">
+                  <h5 className="mb-0">Card {i + 1}</h5>
+                  <Button
+                    size="sm"
+                    variant="outline-primary"
+                    onClick={() => toggleExpand(i)}
+                  >
+                    {expanded[i] ? "Hide" : "Show"}
+                  </Button>
+                  <Button
+                    className="ms-2"
+                    variant="danger"
+                    size="sm"
+                    onClick={() => removeCard(i)}
+                    disabled={cardObjects.length <= 1}
+                  >
+                    Remove
+                  </Button>
+                </div>
 
-                <Button
-                  className="ms-2"
-                  variant="secondary"
-                  onClick={() => setPrintMode(true)}
-                >
-                  Switch to Print View
-                </Button>
+                <Collapse in={expanded[i]}>
+                  <div>
+                    <CardBuilder
+                      cardObject={cardObject}
+                      onChange={(updated) => handleUpdate(i, updated)}
+                    />
+                  </div>
+                </Collapse>
+              </Col>
+              <Col className="d-flex justify-content-center">
+                <div className="card-preview">
+                  <CardDisplay cardObject={cardObject} />
+                </div>
               </Col>
             </Row>
-          </>
-        ) : (
-          <>
-            <PrintView cardObjects={cardObjects} />
-            <Row className="mt-3">
-              <Col>
-                <Button variant="primary" onClick={() => window.print()}>
-                  Print
-                </Button>
-                <Button
-                  className="ms-2"
-                  variant="secondary"
-                  onClick={() => setPrintMode(false)}
-                >
-                  Back to Edit View
-                </Button>
-              </Col>
-            </Row>
-          </>
-        )}
-      </Container>
+          ))}
+
+          <Row>
+            <Col>
+              <Button onClick={addCard}>Add Card</Button>
+              <Button
+                className="ms-2"
+                variant="secondary"
+                onClick={() => setPrintMode(true)}
+              >
+                Switch to Print View
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <Container>
+          <PrintView cardObjects={cardObjects} />
+          <Row className="mt-3">
+            <Col>
+              <Button variant="primary" onClick={() => window.print()}>
+                Print
+              </Button>
+              <Button
+                className="ms-2"
+                variant="secondary"
+                onClick={() => setPrintMode(false)}
+              >
+                Back to Edit View
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </div>
   );
 }
